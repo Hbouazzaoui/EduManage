@@ -36,7 +36,7 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Informations des Étudiants</h1>
+    <h1 class="text-center mb-4">EduManage</h1>
     <div class="row">
         <!-- Carte 1 -->
         <div class="col-md-4">
