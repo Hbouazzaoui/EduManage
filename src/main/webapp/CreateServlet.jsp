@@ -35,15 +35,15 @@
   <form action="cours" method="post">
     <input type="hidden" name="action" value="add">
     <div class="form-group">
-      <label for="title"><i class="fas fa-font"></i> Titre du Cours</label>
+      <%--@declare id="title"--%><label for="title"><i class="fas fa-font"></i> Titre du Cours</label>
       <input type="text" class="form-control" name="title" placeholder="Ex: Developpement Web" required>
     </div>
     <div class="form-group">
-      <label for="description"><i class="fas fa-align-left"></i> Description</label>
+      <%--@declare id="description"--%><label for="description"><i class="fas fa-align-left"></i> Description</label>
       <textarea class="form-control" name="description" rows="4" placeholder="Breve description du cours..." required></textarea>
     </div>
     <div class="form-group">
-      <label for="duration"><i class="fas fa-clock"></i> Duree (en heures)</label>
+      <%--@declare id="duration"--%><label for="duration"><i class="fas fa-clock"></i> Duree (en heures)</label>
       <input type="number" class="form-control" name="duration" placeholder="Ex: 20" required>
     </div>
     <button type="submit" class="btn btn-custom btn-block"><i class="fas fa-plus"></i> Ajouter Cours</button>
