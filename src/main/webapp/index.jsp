@@ -42,7 +42,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">John Doe</h5>
+                    <h5 class="card-title"><a href="AddStudent.jsp">aaaaa</a></h5>
                     <p class="card-text"><strong>Prénom:</strong> John</p>
                     <p class="card-text"><strong>Date de Naissance:</strong> 1990-05-15</p>
                     <p class="card-text"><strong>Email:</strong> john.doe@example.com</p>
