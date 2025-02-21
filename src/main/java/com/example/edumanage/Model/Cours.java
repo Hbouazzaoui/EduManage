@@ -6,16 +6,16 @@ public class Cours {
     private String description;
     private int duration;
 
-    // Constructor with ID (for updates)
-    public Cours(int id, String title, String description, int duration) {
-        this.id = id;
+    // Constructor without ID (for inserts)
+    public Cours(String title, String description, int duration) {
         this.title = title;
         this.description = description;
         this.duration = duration;
     }
 
-    // Constructor without ID (for inserts)
-    public Cours(String title, String description, int duration) {
+    // Constructor with ID (for updates)
+    public Cours(int id, String title, String description, int duration) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.duration = duration;

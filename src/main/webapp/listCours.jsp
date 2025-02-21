@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dev
-  Date: 2/19/2025
-  Time: 10:20 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.example.edumanage.Model.Cours" %>
 <%@ page import="java.util.List" %>
@@ -24,21 +17,8 @@
         .container {
             margin-top: 50px;
         }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: scale(1.02);
-        }
-        .btn-custom {
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-        }
-        .btn-custom:hover {
-            background-color: #0056b3;
+        table {
+            background-color: white;
         }
     </style>
 </head>
@@ -47,37 +27,80 @@
 <div class="container">
     <h3 class="text-center mb-4"><i class="fas fa-book"></i> Liste des Cours</h3>
 
-    <div class="row">
-        <%
-            List<Cours> coursList = (List<Cours>) request.getAttribute("coursList");
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Durée (h)</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% List<Cours> coursList = (List<Cours>) request.getAttribute("listCours");
             if (coursList != null && !coursList.isEmpty()) {
-                for (Cours cours : coursList) {
-        %>
-        <div class="col-md-4 mb-4">
-            <div class="card p-3">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-chalkboard-teacher"></i> <%= cours.getTitle() %></h5>
-                    <p class="card-text"><%= cours.getDescription() %></p>
-                    <p><i class="fas fa-clock"></i> Durée: <strong><%= cours.getDuration() %>h</strong></p>
-                    <a href="editCours?id=<%= cours.getId() %>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Modifier</a>
-                    <a href="deleteCours?id=<%= cours.getId() %>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Supprimer</a>
+                for (Cours cours : coursList) { %>
+        <tr>
+            <td><%= cours.getId() %></td>
+            <td><%= cours.getTitle() %></td>
+            <td><%= cours.getDescription() %></td>
+            <td><%= cours.getDuration() %></td>
+            <td>
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal<%= cours.getId() %>">
+                    <i class="fas fa-edit"></i> Modifier
+                </button>
+                <a href="cours?action=delete&id=<%= cours.getId() %>" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i> Supprimer
+                </a>
+            </td>
+        </tr>
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal<%= cours.getId() %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel<%= cours.getId() %>" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel<%= cours.getId() %>">Modifier le Cours</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="cours" method="post">
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="id" value="<%= cours.getId() %>">
+                            <div class="form-group">
+                                <label for="title<%= cours.getId() %>">Titre</label>
+                                <input type="text" class="form-control" id="title<%= cours.getId() %>" name="title" value="<%= cours.getTitle() %>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description<%= cours.getId() %>">Description</label>
+                                <textarea class="form-control" id="description<%= cours.getId() %>" name="description" rows="3" required><%= cours.getDescription() %></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration<%= cours.getId() %>">Durée (h)</label>
+                                <input type="number" class="form-control" id="duration<%= cours.getId() %>" name="duration" value="<%= cours.getDuration() %>" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <%
-            }
-        } else {
-        %>
-        <div class="col-12 text-center">
-            <p class="text-muted">Aucun cours disponible.</p>
-        </div>
-        <%
-            }
-        %>
-    </div>
+        <%   }
+        } else { %>
+        <tr>
+            <td colspan="5" class="text-center">Aucun cours disponible.</td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
 
     <div class="text-center mt-4">
-        <a href="createCoursForm.jsp" class="btn btn-custom"><i class="fas fa-plus"></i> Ajouter un Cours</a>
+        <a href="CreateServlet.jsp" class="btn btn-success"><i class="fas fa-plus"></i> Ajouter un Cours</a>
     </div>
 </div>
 
