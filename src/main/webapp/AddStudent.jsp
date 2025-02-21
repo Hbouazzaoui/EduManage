@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.example.edumanage.Model.Student" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,26 +20,35 @@
 <body>
 <div class="container">
   <h2 class="text-center">Ajouter un étudiant</h2>
-  <form action="Student" method="post">
+  <form action="Student/<%= request.getAttribute("student") == null ? "insert" : "update" %>" method="post">
+    <% if (request.getAttribute("student") != null) { %>
+    <input type="hidden" name="id" value="<%= ((Student) request.getAttribute("student")).getId() %>">
+    <% } %>
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="nom" class="form-label">Nom</label>
-        <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
+        <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom"
+               value="<%= request.getAttribute("student") == null ? "" : ((Student) request.getAttribute("student")).getNom() %>" required>
       </div>
       <div class="col-md-6">
         <label for="prenom" class="form-label">Prénom</label>
-        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
+        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom"
+               value="<%= request.getAttribute("student") == null ? "" : ((Student) request.getAttribute("student")).getPrenom() %>" required>
       </div>
     </div>
     <div class="mb-3">
       <label for="dateNaissance" class="form-label">Date de naissance</label>
-      <input type="date" class="form-control" id="dateNaissance" name="date_naissance" required>
+      <input type="date" class="form-control" id="dateNaissance" name="date_naissance"
+             value="<%= request.getAttribute("student") == null ? "" : ((Student) request.getAttribute("student")).getDate_naissance() %>" required>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+             value="<%= request.getAttribute("student") == null ? "" : ((Student) request.getAttribute("student")).getEmail() %>" required>
     </div>
-    <button type="submit" class="btn btn-primary">Ajouter l'étudiant</button>
+    <button type="submit" class="btn btn-primary">
+      <%= request.getAttribute("student") == null ? "Ajouter l'étudiant" : "Mettre à jour" %>
+    </button>
   </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

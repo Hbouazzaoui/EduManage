@@ -27,7 +27,7 @@
                 <th>Prénom</th>
                 <th>Date de Naissance</th>
                 <th>Email</th>
-                <th>Cours</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -41,7 +41,10 @@
                 <td><%= student.getPrenom() %></td>
                 <td><%= student.getDate_naissance() %></td>
                 <td><%= student.getEmail() %></td>
-                <td><!-- Ajouter les cours ici --></td>
+                <td>
+                    <a href="Student/edit?id=<%= student.getId() %>" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="Student/delete?id=<%= student.getId() %>" class="btn btn-danger btn-sm" name="id">Delete</a>
+                </td>
             </tr>
             <%
                     }

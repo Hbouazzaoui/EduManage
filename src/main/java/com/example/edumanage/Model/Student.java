@@ -1,19 +1,24 @@
 package com.example.edumanage.Model;
 
+import java.sql.Date;
+
 public class Student {
     private int id;
     private String nom;
     private String prenom;
     private String email;
-    private String date_naissance;
+    private Date date_naissance;
 
     public Student() {}
 
-    public Student(String nom, String prenom, String email, String date_naissance) {
+    public Student(String nom, String prenom, String email, Date date_naissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.date_naissance = date_naissance;
+    }
+
+    public Student(String nom, String prenom, String email, java.util.Date date_naissance) {
     }
 
     public int getId() {
@@ -48,11 +53,11 @@ public class Student {
         this.email = email;
     }
 
-    public String getDate_naissance() {
+    public Date getDate_naissance() {
         return date_naissance;
     }
 
-    public void setDate_naissance(String date_naissance) {
+    public void setDate_naissance(Date date_naissance) {
         this.date_naissance = date_naissance;
     }
 

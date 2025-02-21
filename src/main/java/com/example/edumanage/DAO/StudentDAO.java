@@ -31,43 +31,22 @@ public class StudentDAO {
                 System.out.println("Table 'etudiant' created successfully");
             }
 
-            try (Statement statement = connection.createStatement()) {
-                String createTableSQL = "CREATE TABLE IF NOT EXISTS inscrit (" +
-                        "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                        "cours_id INT, " +
-                        "etudiant_id INT, " +
-                        "CONSTRAINT fkey_cours FOREIGN KEY (cours_id) REFERENCES cours(id), " +
-                        "CONSTRAINT fkey_etudiant FOREIGN KEY (etudiant_id) REFERENCES etudiant(id)" +
-                        ");";
-                statement.executeUpdate(createTableSQL);
-                System.out.println("Table 'inscrit' created successfully");
-            }
-
-        } catch (ClassNotFoundException e) {
-            System.err.println("MySQL JDBC Driver not found!");
-            e.printStackTrace();
         } catch (SQLException e) {
             System.err.println("Database connection error: " + e.getMessage());
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("MySQL JDBC Driver not found!", e);
         }
     }
 
-    public void AddStudent(Student student) {
-        if (connection == null) {
-            System.err.println("Database connection is not initialized!");
-            return;
-        }
-
-        String query = "INSERT INTO etudiant(nom, prenom, email, date_naissance) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, student.getNom());
-            stmt.setString(2, student.getPrenom());
-            stmt.setString(3, student.getEmail());
-            stmt.setString(4, student.getDate_naissance());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error inserting student: " + e.getMessage());
-            e.printStackTrace();
+    public void AddStudent(Student student) throws SQLException {
+        String sqlEtudiant = "INSERT INTO etudiant (nom, prenom, email, date_naissance) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmtEtudiant = connection.prepareStatement(sqlEtudiant)) {
+            stmtEtudiant.setString(1, student.getNom());
+            stmtEtudiant.setString(2, student.getPrenom());
+            stmtEtudiant.setString(3, student.getEmail());
+            stmtEtudiant.setDate(4, student.getDate_naissance());
+            stmtEtudiant.executeUpdate();
         }
     }
 
@@ -82,7 +61,7 @@ public class StudentDAO {
                 student.setNom(rs.getString("nom"));
                 student.setPrenom(rs.getString("prenom"));
                 student.setEmail(rs.getString("email"));
-                student.setDate_naissance(rs.getString("date_naissance"));
+                student.setDate_naissance(rs.getDate("date_naissance"));
                 students.add(student);
             }
         } catch (SQLException e) {
@@ -103,7 +82,7 @@ public class StudentDAO {
             stmt.setString(1, student.getNom());
             stmt.setString(2, student.getPrenom());
             stmt.setString(3, student.getEmail());
-            stmt.setString(4, student.getDate_naissance());
+            stmt.setDate(4, student.getDate_naissance());
             stmt.setInt(5, student.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -140,12 +119,22 @@ public class StudentDAO {
                 student.setNom(rs.getString("nom"));
                 student.setPrenom(rs.getString("prenom"));
                 student.setEmail(rs.getString("email"));
-                student.setDate_naissance(rs.getString("date_naissance"));
+                student.setDate_naissance(rs.getDate("date_naissance"));
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving student: " + e.getMessage());
             e.printStackTrace();
         }
         return student;
+    }
+
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println("Error closing connection: " + e.getMessage());
+            }
+        }
     }
 }

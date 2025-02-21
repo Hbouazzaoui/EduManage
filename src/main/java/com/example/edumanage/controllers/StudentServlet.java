@@ -7,10 +7,11 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/Student")
+@WebServlet("/Student/*")
 public class StudentServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private StudentDAO studentDAO;
@@ -26,9 +27,12 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getRequestURI();
-        if (action.contains("/Student/")) {
-            action = action.substring(action.lastIndexOf("/") + 1);
+        String action = request.getPathInfo(); // Extract action from the path
+
+        if (action == null || action.equals("/")) {
+            action = "list"; // Default action
+        } else {
+            action = action.substring(1); // Remove the leading slash
         }
 
         try {
@@ -53,7 +57,7 @@ public class StudentServlet extends HttpServlet {
                     break;
             }
         } catch (SQLException e) {
-            throw new ServletException(e);
+            throw new ServletException("Database error: " + e.getMessage(), e);
         }
     }
 
@@ -61,13 +65,13 @@ public class StudentServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         List<Student> listStudent = studentDAO.selectAllUsers();
         request.setAttribute("liststudent", listStudent);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Student.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Student.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("AddStudent.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/AddStudent.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -75,8 +79,8 @@ public class StudentServlet extends HttpServlet {
             throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Student existingStudent = studentDAO.selectStudent(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-        request.setAttribute("user", existingStudent);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/AddStudent.jsp"); // Reuse AddStudent.jsp for editing
+        request.setAttribute("student", existingStudent);
         dispatcher.forward(request, response);
     }
 
@@ -87,9 +91,9 @@ public class StudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String date_naissance = request.getParameter("date_naissance");
 
-        Student newStudent = new Student(nom, prenom, email, date_naissance);
+        Student newStudent = new Student(nom, prenom, email, Date.valueOf(date_naissance));
         studentDAO.AddStudent(newStudent);
-        response.sendRedirect("Student.jsp");
+        response.sendRedirect("list");
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response)
@@ -100,7 +104,7 @@ public class StudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String date_naissance = request.getParameter("date_naissance");
 
-        Student student = new Student(nom, prenom, email, date_naissance);
+        Student student = new Student(nom, prenom, email, Date.valueOf(date_naissance));
         student.setId(id);
         studentDAO.updateStudent(student);
         response.sendRedirect("list");
@@ -108,8 +112,8 @@ public class StudentServlet extends HttpServlet {
 
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        studentDAO.deleteStudent(id);
-        response.sendRedirect("list");
+        int id = Integer.parseInt(request.getParameter("id")); // Get the student ID from the request
+        studentDAO.deleteStudent(id); // Delete the student from the database
+        response.sendRedirect("list"); // Redirect to the list page
     }
 }
