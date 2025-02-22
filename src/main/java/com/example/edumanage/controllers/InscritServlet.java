@@ -1,6 +1,10 @@
 package com.example.edumanage.controllers;
 
 import com.example.edumanage.DAO.StudentCourseDAO;
+import com.example.edumanage.DAO.StudentDAO;
+import com.example.edumanage.DAO.CoursDAO;
+import com.example.edumanage.Model.Student;
+import com.example.edumanage.Model.Cours;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,14 +12,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/enroll-student")
 public class InscritServlet extends HttpServlet {
     private StudentCourseDAO studentCourseDAO;
+    private StudentDAO studentDAO;
+    private CoursDAO coursDAO;
 
     @Override
     public void init() {
         studentCourseDAO = new StudentCourseDAO();
+        studentDAO = new StudentDAO();
+        coursDAO = new CoursDAO();
     }
 
     @Override
