@@ -1,11 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Fatima ezzahra
-  Date: 2/19/2025
-  Time: 11:36 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.edumanage.Model.Student" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -38,46 +33,37 @@
 <div class="container mt-5">
     <h1 class="text-center mb-4">EduManage</h1>
     <div class="row">
-        <!-- Carte 1 -->
+        <%
+            // Retrieve the list of students from the request attribute
+            List<Student> studentList = (List<Student>) request.getAttribute("liststudent");
+            if (studentList != null && !studentList.isEmpty()) {
+                for (Student student : studentList) {
+        %>
+        <!-- Carte pour chaque étudiant -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="AddStudent.jsp">aaaaa</a></h5>
-                    <p class="card-text"><strong>Prénom:</strong> John</p>
-                    <p class="card-text"><strong>Date de Naissance:</strong> 1990-05-15</p>
-                    <p class="card-text"><strong>Email:</strong> john.doe@example.com</p>
-                    <p class="card-text"><strong>Cours:</strong> Mathématiques</p>
+                    <h5 class="card-title">
+                        <a href="Student/edit?id=<%= student.getId() %>"><%= student.getNom() %></a>
+                    </h5>
+                    <p class="card-text"><strong>Prénom:</strong> <%= student.getPrenom() %></p>
+                    <p class="card-text"><strong>Date de Naissance:</strong> <%= student.getDate_naissance() %></p>
+                    <p class="card-text"><strong>Email:</strong> <%= student.getEmail() %></p>
+                    <p class="card-text"><strong>Cours:</strong> Mathématiques</p> <!-- Replace with actual course data if available -->
                 </div>
             </div>
         </div>
-
-        <!-- Carte 2 -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Jane Smith</h5>
-                    <p class="card-text"><strong>Prénom:</strong> Jane</p>
-                    <p class="card-text"><strong>Date de Naissance:</strong> 1992-08-25</p>
-                    <p class="card-text"><strong>Email:</strong> jane.smith@example.com</p>
-                    <p class="card-text"><strong>Cours:</strong> Physique</p>
-                </div>
-            </div>
+        <%
+            }
+        } else {
+        %>
+        <!-- Message si aucun étudiant n'est disponible -->
+        <div class="col-12 text-center">
+            <p>Aucun étudiant disponible.</p>
         </div>
-
-        <!-- Carte 3 -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Chris Brown</h5>
-                    <p class="card-text"><strong>Prénom:</strong> Chris</p>
-                    <p class="card-text"><strong>Date de Naissance:</strong> 1991-03-30</p>
-                    <p class="card-text"><strong>Email:</strong> chris.brown@example.com</p>
-                    <p class="card-text"><strong>Cours:</strong> Chimie</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ajoutez plus de cartes ici -->
+        <%
+            }
+        %>
     </div>
 </div>
 

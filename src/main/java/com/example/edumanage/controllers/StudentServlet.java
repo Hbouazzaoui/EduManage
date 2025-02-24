@@ -68,7 +68,6 @@ public class StudentServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Student.jsp");
         dispatcher.forward(request, response);
     }
-
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/AddStudent.jsp");
@@ -112,8 +111,8 @@ public class StudentServlet extends HttpServlet {
 
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id")); // Get the student ID from the request
-        studentDAO.deleteStudent(id); // Delete the student from the database
-        response.sendRedirect("list"); // Redirect to the list page
+        int id = Integer.parseInt(request.getParameter("id"));
+        studentDAO.deleteStudent(id);
+        response.sendRedirect("list");
     }
 }
