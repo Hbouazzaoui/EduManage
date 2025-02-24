@@ -43,7 +43,7 @@
             <td><%= student.getEmail() %></td>
             <td>
                 <!-- Edit Button with Modal Trigger -->
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal<%= student.getId() %>">
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="Student/update?id=<%= student.getId() %>">
                     <i class="fas fa-edit"></i> Edit
                 </button>
                 <!-- Delete Button -->
@@ -53,60 +53,60 @@
             </td>
         </tr>
 
-        <!-- Edit Modal for Each Student -->
-        <div class="modal fade" id="editModal<%= student.getId() %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel<%= student.getId() %>" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel<%= student.getId() %>">Edit Student Information</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="Student/update" method="post">
-                            <input type="hidden" name="id" value="<%= student.getId() %>">
-                            <div class="form-group">
-                                <label for="nom<%= student.getId() %>">Nom</label>
-                                <input type="text" class="form-control" id="nom<%= student.getId() %>" name="nom" value="<%= student.getNom() %>" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="prenom<%= student.getId() %>">Prénom</label>
-                                <input type="text" class="form-control" id="prenom<%= student.getId() %>" name="prenom" value="<%= student.getPrenom() %>" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="date_naissance<%= student.getId() %>">Date de Naissance</label>
-                                <input type="date" class="form-control" id="date_naissance<%= student.getId() %>" name="date_naissance" value="<%= student.getDate_naissance() %>" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email<%= student.getId() %>">Email</label>
-                                <input type="email" class="form-control" id="email<%= student.getId() %>" name="email" value="<%= student.getEmail() %>" required>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%
-            }
-        } else {
-        %>
-        <tr>
-            <td colspan="5" class="text-center">No students available.</td>
-        </tr>
-        <%
-            }
-        %>
+<%--        <!-- Edit Modal for Each Student -->--%>
+<%--        <div class="modal fade" id="editModal<%= student.getId() %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel<%= student.getId() %>" aria-hidden="true">--%>
+<%--            <div class="modal-dialog" role="document">--%>
+<%--                <div class="modal-content">--%>
+<%--                    <div class="modal-header">--%>
+<%--                        <h5 class="modal-title" id="editModalLabel<%= student.getId() %>">Edit Student Information</h5>--%>
+<%--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                            <span aria-hidden="true">&times;</span>--%>
+<%--                        </button>--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-body">--%>
+<%--                        <form action="edit" method="post">--%>
+<%--                            <input type="hidden" name="id" value="<%= student.getId() %>">--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="nom<%= student.getId() %>">Nom</label>--%>
+<%--                                <input type="text" class="form-control" id="nom<%= student.getId() %>" name="nom" value="<%= student.getNom() %>" required>--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="prenom<%= student.getId() %>">Prénom</label>--%>
+<%--                                <input type="text" class="form-control" id="prenom<%= student.getId() %>" name="prenom" value="<%= student.getPrenom() %>" required>--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="date_naissance<%= student.getId() %>">Date de Naissance</label>--%>
+<%--                                <input type="date" class="form-control" id="date_naissance<%= student.getId() %>" name="date_naissance" value="<%= student.getDate_naissance() %>" required>--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="email<%= student.getId() %>">Email</label>--%>
+<%--                                <input type="email" class="form-control" id="email<%= student.getId() %>" name="email" value="<%= student.getEmail() %>" required>--%>
+<%--                            </div>--%>
+<%--                            <div class="modal-footer">--%>
+<%--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+<%--                                <button type="submit" class="btn btn-primary">Save changes</button>--%>
+<%--                            </div>--%>
+<%--                        </form>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <%--%>
+<%--            }--%>
+<%--        } else {--%>
+<%--        %>--%>
+<%--        <tr>--%>
+<%--            <td colspan="5" class="text-center">No students available.</td>--%>
+<%--        </tr>--%>
+<%--        <%--%>
+<%--            }--%>
+<%--        %>--%>
         </tbody>
     </table>
 
     <!-- Add Student Button -->
     <div class="text-center mt-4">
-        <a href="Student/new" class="btn btn-success"><i class="fas fa-plus"></i> Add Student</a>
+        <a href="new" class="btn btn-success"><i class="fas fa-plus"></i> Add Student</a>
     </div>
 </div>
 

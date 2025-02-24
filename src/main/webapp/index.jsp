@@ -30,6 +30,8 @@
     </style>
 </head>
 <body>
+
+<a href="Student/">aaaaaaaaa</a>
 <div class="container mt-5">
     <h1 class="text-center mb-4">EduManage</h1>
     <div class="row">

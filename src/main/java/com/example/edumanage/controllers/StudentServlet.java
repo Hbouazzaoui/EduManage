@@ -90,7 +90,7 @@ public class StudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String date_naissance = request.getParameter("date_naissance");
 
-        Student newStudent = new Student(nom, prenom, email, Date.valueOf(date_naissance));
+        Student newStudent = new Student(nom, prenom, email, date_naissance);
         studentDAO.AddStudent(newStudent);
         response.sendRedirect("list");
     }
@@ -103,7 +103,7 @@ public class StudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String date_naissance = request.getParameter("date_naissance");
 
-        Student student = new Student(nom, prenom, email, Date.valueOf(date_naissance));
+        Student student = new Student(nom, prenom, email, date_naissance);
         student.setId(id);
         studentDAO.updateStudent(student);
         response.sendRedirect("list");

@@ -20,7 +20,7 @@
 <body>
 <div class="container">
   <h2 class="text-center">Ajouter un étudiant</h2>
-  <form action="Student/<%= request.getAttribute("student") == null ? "insert" : "update" %>" method="post">
+  <form action="Student/<%= request.getAttribute("student") == null ? "insert" : "edit" %>" method="post">
     <% if (request.getAttribute("student") != null) { %>
     <input type="hidden" name="id" value="<%= ((Student) request.getAttribute("student")).getId() %>">
     <% } %>
