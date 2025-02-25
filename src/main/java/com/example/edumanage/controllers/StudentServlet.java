@@ -29,10 +29,14 @@ public class StudentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getPathInfo(); // Extract action from the path
 
+        System.out.println("action:");
+        System.out.println(action);
+
         if (action == null || action.equals("/")) {
             action = "list"; // Default action
         } else {
             action = action.substring(1); // Remove the leading slash
+
         }
 
         try {
@@ -50,6 +54,7 @@ public class StudentServlet extends HttpServlet {
                     showEditForm(request, response);
                     break;
                 case "update":
+                    System.out.println("update executed");
                     updateStudent(request, response);
                     break;
                 default:
@@ -97,11 +102,14 @@ public class StudentServlet extends HttpServlet {
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+
+        System.out.println("update student");
         int id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(id);
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
-        String date_naissance = request.getParameter("date_naissance");
+        Date date_naissance = Date.valueOf(request.getParameter("date_naissance"));
 
         Student student = new Student(nom, prenom, email, date_naissance);
         student.setId(id);
