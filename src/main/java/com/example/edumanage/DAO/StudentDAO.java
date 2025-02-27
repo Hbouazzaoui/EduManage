@@ -58,7 +58,7 @@ public class StudentDAO {
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                Student student = new Student();
+                Student student = new Student(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getDate("date_naissance"));
                 student.setId(rs.getInt("id"));
                 student.setNom(rs.getString("nom"));
                 student.setPrenom(rs.getString("prenom"));
@@ -97,7 +97,7 @@ public class StudentDAO {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    student = new Student();
+                    student = new Student(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getDate("date_naissance"));
                     student.setId(rs.getInt("id"));
                     student.setNom(rs.getString("nom"));
                     student.setPrenom(rs.getString("prenom"));

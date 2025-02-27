@@ -4,17 +4,13 @@ public class StudentCourse {
     private int studentId;
     private int courseId;
 
-    // Constructor بدون معاملات
-    public StudentCourse() {
-    }
-
-    // Constructor مع معاملات
+    // Constructeur
     public StudentCourse(int studentId, int courseId) {
         this.studentId = studentId;
         this.courseId = courseId;
     }
 
-    // Getters و Setters
+    // Getters et Setters
     public int getStudentId() {
         return studentId;
     }
@@ -31,7 +27,6 @@ public class StudentCourse {
         this.courseId = courseId;
     }
 
-    // toString() لعرض معلومات الكائن
     @Override
     public String toString() {
         return "StudentCourse{" +

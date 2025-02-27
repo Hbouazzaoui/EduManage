@@ -9,7 +9,7 @@ public class Student {
     private String email;
     private Date date_naissance;
 
-    public Student() {}
+    public Student(int id, String nom, String prenom, String email, Date date_naissance) {}
 
     public Student(String nom, String prenom, String email, Date date_naissance) {
         this.nom = nom;

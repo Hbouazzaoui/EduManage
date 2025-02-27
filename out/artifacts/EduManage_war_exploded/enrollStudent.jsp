@@ -1,56 +1,76 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.example.edumanage.Model.Student" %>
-<%@ page import="com.example.edumanage.Model.Cours" %>
-<%@ page import="java.util.List" %>
 
-<!DOCTYPE html>
-<html lang="fr">
+
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscrire un Étudiant à un Cours</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Inscription Étudiant</title>
   <style>
     body {
-      background-color: #f8f9fc;
-      padding: 2rem;
+      font-family: Arial, sans-serif;
+      margin: 20px;
     }
-    .form-container {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    h1 {
+      color: #333;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-<div class="form-container">
-  <h2 class="text-center mb-4">Inscrire un Étudiant à un Cours</h2>
-  <form action="${pageContext.request.contextPath}/enroll-student" method="post">
-    <div class="mb-3">
-      <label for="student" class="form-label">Sélectionner un Étudiant</label>
-      <select class="form-select" id="student" name="studentId" required>
-        <option value="">Choisir un étudiant...</option>
-        <% List<Student> students = (List<Student>) request.getAttribute("students");
-          for (Student student : students) { %>
-        <option value="<%= student.getId() %>"><%= student.getFirstName() %> <%= student.getLastName() %></option>
-        <% } %>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="course" class="form-label">Sélectionner un Cours</label>
-      <select class="form-select" id="course" name="courseId" required>
-        <option value="">Choisir un cours...</option>
-        <% List<Cours> courses = (List<Cours>) request.getAttribute("courses");
-          for (Cours course : courses) { %>
-        <option value="<%= course.getId() %>"><%= course.getTitle() %></option>
-        <% } %>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary w-100">Inscrire</button>
-  </form>
-</div>
+<h1>Inscription d'un étudiant à un cours</h1>
+
+<!-- Vérification que les listes ne sont pas vides -->
+<c: if test="${empty students or empty courses}">
+  <p style="color: red;">Aucun étudiant ou cours disponible.</p>
+</c: if>
+
+<form action="/enroll" method="post">
+  <label for="studentId">Étudiant:</label>
+  <select id="studentId" name="studentId" required>
+    <option value="">Sélectionnez un étudiant</option>
+    <c: forEach items="${students}" var="student">
+      <option value="${student.id}">${student.nom} ${student.prenom}</option>
+    </c:forEach>
+  </select>
+  <br>
+
+  <label for="courseId">Cours:</label>
+  <select id="courseId" name="courseId" required>
+    <option value="">Sélectionnez un cours</option>
+    <c: forEach items="${courses}" var="course">
+      <option value="${course.id}">${course.titre}</option>
+    </c: forEach>
+  </select>
+  <br>
+
+  <button type="submit">Inscrire</button>
+</form>
 </body>
 </html>

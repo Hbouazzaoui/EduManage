@@ -70,7 +70,7 @@
         <a href="new" class="btn btn-success"><i class="fas fa-plus"></i> Add Student</a>
     </div>
 </div>
-
+<a href="enrollStudent.jsp"></a>
 <!-- Bootstrap and jQuery Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
