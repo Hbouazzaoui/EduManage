@@ -60,7 +60,7 @@
 <body>
 <div class="login-container">
     <h2>Connexion</h2>
-    <form action="LoginServlet" method="post">
+    <form action="/Login" method="post">
         <div class="mb-3">
             <label class="form-label">Nom utilisateur</label>
             <input type="text" class="form-control" id="email" name="username" placeholder="Entrez votre Nom d'utilisateur" required>

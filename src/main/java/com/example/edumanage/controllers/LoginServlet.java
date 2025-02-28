@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", value = "/LoginServlet")
+@WebServlet({"/","/Login"})
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -14,13 +14,16 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    protected void doPost(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
 
 
         if("admin".equals(username) && "123".equals(password)){
-        response.sendRedirect("index.jsp");
+        HttpSession session = req.getSession();
+        session.setAttribute("isLoggedin", true);
+        session.setAttribute("username", username);
+            response.sendRedirect("index.jsp");
         }else{
             response.sendRedirect("Login.jsp?error=true");
         }
