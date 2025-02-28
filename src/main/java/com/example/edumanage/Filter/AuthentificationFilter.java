@@ -19,7 +19,7 @@ public class AuthentificationFilter implements Filter {
        String action = req.getServletPath();
        if("/".equals(action) || "/Login".equals(action) || "/Login.jsp".equals(action)){
            filterChain.doFilter(servletRequest, servletResponse);
-           return;
+
        }else {
 Object isLoggedinObj = req.getSession().getAttribute("isLoggedin");
 if(isLoggedinObj !=null){
@@ -29,8 +29,9 @@ if(isLoggedinObj !=null){
         return;
        }
     }
-}
 resp.sendRedirect("/");
+}
+
 
 
     }
