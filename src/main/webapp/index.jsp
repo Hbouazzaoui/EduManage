@@ -162,9 +162,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- Enrolled Students Card -->
+        <div class="col-md-4 col-sm-6 mx-auto">
+            <div class="custom-card">
+                <div class="card-body">
+                    <div class="icon-wrapper icon-info">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h5 class="card-title">Étudiants Inscrits</h5>
+                    <p class="card-text">Cliquez ici pour voir la liste complète des étudiants inscrits.</p>
+                    <a href="${pageContext.request.contextPath}/enrollStudent.jsp" class="btn custom-btn btn-info">
+                        <i class="fa-solid fa-list me-2"></i>Voir la Liste
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<a href="enrollStudent.jsp"> aaaaaaaaa</a>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
